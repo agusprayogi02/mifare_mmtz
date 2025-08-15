@@ -21,12 +21,21 @@ android {
     }
     kotlinOptions {
         jvmTarget = '17'
+        // Pastikan ini ada/false supaya warning tidak mematahkan build
+        allWarningsAsErrors = false
     }
 
     lint {
         disable 'InvalidPackage'
     }
 }
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        allWarningsAsErrors = false
+    }
+}
+
 
 repositories {
     google()

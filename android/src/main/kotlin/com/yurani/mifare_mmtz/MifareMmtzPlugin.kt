@@ -101,8 +101,8 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     val sb2 = sb.toString()
     Intrinsics.checkExpressionValueIsNotNull(sb2, "sb.toString()")
     if (sb2 != null) {
-      val lowerCase = sb2.toLowerCase()
-      Intrinsics.checkExpressionValueIsNotNull(lowerCase, "(this as java.lang.String).toLowerCase()")
+      val lowerCase = sb2.lowercase()
+      Intrinsics.checkExpressionValueIsNotNull(lowerCase, "(this as java.lang.String).lowercase()")
       return lowerCase.toLong(16).toString()
     }
     throw TypeCastException("null cannot be cast to non-null type java.lang.String")
