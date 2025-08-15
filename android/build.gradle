@@ -1,7 +1,3 @@
-group 'com.yurani.mifare_mmtz'
-version '1.0-SNAPSHOT'
-// android/build.gradle (library module)
-
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
