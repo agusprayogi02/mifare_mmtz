@@ -4,12 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yurani.mifare_mmtz'   // keep this stable
+    namespace 'com.yurani.mifare_mmtz'
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 21                      // AGP 8 requires 21+
-        // consumerProguardFiles 'consumer-rules.pro' // if you publish rules
+        minSdk = 21
     }
 
     sourceSets {
