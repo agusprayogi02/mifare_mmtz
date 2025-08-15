@@ -1,53 +1,43 @@
 group 'com.yurani.mifare_mmtz'
 version '1.0-SNAPSHOT'
+// android/build.gradle (library module)
 
-buildscript {
-    ext.kotlin_version = '1.5.20'
-    repositories {
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
 }
-
-rootProject.allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
-    namespace "com.yurani.mifare_mmtz"
+    namespace 'com.yurani.mifare_mmtz'   // keep this stable
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 21                      // AGP 8 requires 21+
+        // consumerProguardFiles 'consumer-rules.pro' // if you publish rules
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    defaultConfig {
-        minSdkVersion 16
-    }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
+    lint {
+        disable 'InvalidPackage'
     }
 }
 
+repositories {
+    google()
+    mavenCentral()
+}
+
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
