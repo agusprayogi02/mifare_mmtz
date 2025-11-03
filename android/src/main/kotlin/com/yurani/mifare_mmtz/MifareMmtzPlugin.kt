@@ -29,7 +29,6 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private lateinit var channel : MethodChannel
   private lateinit var activity: Activity
   private var mNfcAdapter: NfcAdapter? = null
-  private lateinit var mifareClassic: MifareClassic
   private val flag = NfcAdapter.FLAG_READER_NFC_A
 
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -66,10 +65,10 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private fun getId(result: Result) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       mNfcAdapter?.enableReaderMode(activity, { tag ->
+        var mifareClassic: MifareClassic? = null
         try {
-
           mifareClassic = MifareClassic.get(tag)
-          mifareClassic.connect()
+          mifareClassic?.connect()
           val id = idToDecimalString(tag.id)
           activity.runOnUiThread {
             result.success(id)
@@ -83,7 +82,7 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
           }
 
         } finally {
-          mifareClassic.close()
+          mifareClassic?.close()
           mNfcAdapter?.disableReaderMode(activity)
         }
       }, flag, null)
