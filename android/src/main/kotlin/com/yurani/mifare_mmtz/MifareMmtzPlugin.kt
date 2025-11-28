@@ -69,7 +69,7 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         try {
           mifareClassic = MifareClassic.get(tag)
           mifareClassic?.connect()
-          val id = tag.id.toHexString()
+          val id = idToDecimalString(tag.id)
           activity.runOnUiThread {
             result.success(id)
           }
@@ -87,6 +87,24 @@ class MifareMmtzPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
         }
       }, flag, null)
     }
+  }
+
+  private fun idToDecimalString(bArr: ByteArray): String {
+    val sb = StringBuilder()
+    for (length in bArr.indices.reversed()) {
+      val objArr = arrayOf<Any>(java.lang.Byte.valueOf(bArr[length]))
+      val format = String.format("%02X", *objArr.copyOf(objArr.size))
+      Intrinsics.checkExpressionValueIsNotNull(format, "java.lang.String.format(format, *args)")
+      sb.append(format)
+    }
+    val sb2 = sb.toString()
+    Intrinsics.checkExpressionValueIsNotNull(sb2, "sb.toString()")
+    if (sb2 != null) {
+      val lowerCase = sb2.lowercase()
+      Intrinsics.checkExpressionValueIsNotNull(lowerCase, "(this as java.lang.String).lowercase()")
+      return lowerCase.toLong(16).toString()
+    }
+    throw TypeCastException("null cannot be cast to non-null type java.lang.String")
   }
 
   fun ByteArray.toHexString(): String {
